@@ -1,0 +1,10 @@
+{
+  "name": "Combinissimo",
+  "version": "0.0.1",
+  "title": "Combinissimo",
+  "author": "thelordodin",
+  "homepage": "https://github.com/yuyaryshev/Combinissimo",
+  "dependencies": ["base"],
+  "description": "Combinissimo allows you to pack all your combinators into one small entity: 2x2 or 3x3. Very performant = vanilla perfomance. See mod portal for full description.",
+  "factorio_version": "0.16"
+}
