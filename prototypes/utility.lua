@@ -1,3 +1,23 @@
+function merge_tables(s1, s2, s3)
+	local r = {}
+	if s1 then
+		for key, value in pairs(s1) do
+			r[key] = value
+		end
+	end
+	if s2 then
+		for key, value in pairs(s2) do
+			r[key] = value
+		end
+	end
+	if s3 then
+		for key, value in pairs(s3) do
+			r[key] = value
+		end
+	end
+	return r
+end
+
 -- adds a recipe which is unlocked when the given technology is researched
 function addTechnologyUnlocksRecipe(technologyName, recipeName)
 	local tech = data.raw["technology"][technologyName]
@@ -20,24 +40,30 @@ function addTechnologyUnlocksRecipe(technologyName, recipeName)
 	end
 end
 
-function copyPrototype(type, name, newName)
-  if not data.raw[type] then error("data.raw["..type.."] doesn't exist") end
-  if not data.raw[type][name] then error("data.raw["..type.."]["..name.."] doesn't exist") end
-  local p = table.deepcopy(data.raw[type][name])
-  p.name = newName
+function copyPrototype(s1, s2)
+	local s = merge_tables(s1, s2)  
+
+  if not s.source_type then error("copyPrototype called with s.source_type == nil !") end
+  if not s.source_name then error("copyPrototype called with s.source_name == nil !") end
+  if not s.new_name then error("copyPrototype called with s.new_name == nil !") end
+  if not data.raw[s.source_type] then error("data.raw["..s.source_type.."] doesn't exist") end
+  if not data.raw[s.source_type][s.source_name] then error("data.raw["..s.source_type.."]["..s.source_name.."] doesn't exist") end
+  local p = table.deepcopy(data.raw[s.source_type][s.source_name])
+  p.name = s.new_name
+  
   if p.minable and p.minable.result then
-    p.minable.result = newName
+	p.minable.result = s.new_name
   end
   if p.place_result then
-    p.place_result = newName
+	p.place_result = s.new_name
   end
   if p.result then
-    p.result = newName
+	p.result = s.new_name
   end
   if p.results then
 		for _,result in pairs(p.results) do
-			if result.name == name then
-				result.name = newName
+			if result.name == s.source_name then
+				result.name = s.new_name
 			end
 		end
 	end

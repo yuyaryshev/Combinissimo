@@ -1,0 +1,71 @@
+Technology idea
+
+1)
+	New research "pack" - "Circuits research pack"
+
+	Arithmetic + Constant + Decider + Speaker => Logic Pack
+	Copper Wire + Color wires + Power Switch => Wire Pack
+
+	Logic Pack + 2 Wire Pack => Circuits research pack
+
+
+2)
+	New research process
+	
+	--------------------------------------
+	- Special research process which involves player into creation of circuit setups.
+		Need to give tasks (setups) for science pack production for of all typical circuit schemes
+		- Counter
+		- Sushi belt controller
+		- Signal extraction?
+		- Numeric display?
+		- Gaudge display?
+		
+		- Best of all if this behavior is enforced by some complex recipes.
+		- Maybe some special script for task area, may be implemented CPU intense if needed, since it won't be used in actual factory.
+			
+	- Maybe finding and fixing a bug in a small circuit scheme
+	
+	- There might be many more ideas. In fact it's kind of circuit mini campaign/tutorial
+
+	--------------------------------------
+	
+	
+The profit
+	
+3)
+	The prize is great - unlocking "Combinissimo"
+	
+	- It allows making universal, UPS very friendly combinator which allows packing all the combinators into
+		2x2 or 3x2 or 3x3 SINGLE entity.
+		
+	- It's implemented by making clone invisible and uncollidable entities of all vanilla like combinators.
+		This entities are just placed over combonator entity and interconnected the same way they was in editor.
+		
+	- It's blueprint friendly - all the data is stored into main entity and the layout is recreated when entity is rebuilt.
+	
+	- It'll support instances - that is you can have same layout in many places. And if you have a mistake or change in it - 
+		it will apply changes to all instances of this layout. 
+
+	Logic Pack + 2 Wire Pack => 2x2 Combonator
+	2 Logic Pack + 3 Wire Pack => 3x2 Combonator
+	3 Logic Pack + 5 Wire Pack => 3x3 Combonator
+
+4)
+	There can be several tiers of research:
+	- Different number of inputs in Combonator
+	- Limits to number of combinators or size of Combinissimo editor
+	- Marks for inputs
+	- Special testing tools for circuits inside Combinissimo editor
+	- Integration with wireless signals
+	
+	And, as a special cherry:
+	- Slow* but dynamic changes to layout support
+		*Implementing this will require "on_tick", so this "relayouts" will happen slowly, say one entity for one player per 10 ticks.
+		If implemented so it will be UPS friendly.
+
+I'm not sure if I will implement this all.
+I don't have much time to work on this mod, but i do it from time-to-time.
+
+If anyone want to be a leader of this mod - I'll be happy.
+		

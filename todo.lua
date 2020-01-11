@@ -1,19 +1,24 @@
 -- TODO
-
--- -    Нужно найти как обработать открытие entity, например - плавильни
-			if is_valid(player.opened) and player.opened.name == "stone-furnace" then
-			    
-            end
-
--- -    При отрытии плавильни - переходить в редактор
--- -    При отрытии плавильни внутри редактора - выходить из редактора
-
--- -    Нужно добиться того чтобы данные в редакторе о layout'е схемы воссоздавались корректно
--- -    Нужно воссоздать layout в виде невидимых комбинаторов
--- -    Нужно проверить что layout создан корректно
-
-
-
-
-
-
+--	inside - really long wire reach
+--		Connector (Pole), autocreated
+--		Constant
+--		Decider
+--		Speaker
+--		Arithmetic
+--	outside - invisible
+--		Connector (Pole)
+--		Constant
+--		Decider
+--		Speaker
+--		Arithmetic
+--	Mark combinator 
+--		not recreated if primary entity is not opened, deleted after 5 minutes you don't open it
+--	Green test entities & items - saved, but not recreated
+--		Test input (=constant combinator)
+--		Test decider 
+--		Test arithmetic
+--		Test programmable speaker
+--	Primary entities 
+-- 		2x2
+--		3x3
+--	Adjustment of size of initial created connectors

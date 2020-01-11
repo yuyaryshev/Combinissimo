@@ -1,1 +1,1 @@
-mod_name="__Combinissimo__"
+MOD_NAME="__Combinissimo__"
