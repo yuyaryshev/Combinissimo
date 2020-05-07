@@ -23,6 +23,9 @@
 -- 
 -- For more information, please refer to <http://unlicense.org/>
 
+require("lua_react");
+
+local test_table = {}
 
 local ic = nil
 local editor_chunk_radius = 3
@@ -41,6 +44,40 @@ function isDualWired(entity)
 	return entity and entity.valid and (entity.type == "decider-combinator" or entity.type == "arithmetic-combinator")
 end
 ------------------------------------------------------------------------------------------------------------------------------
+local obsTable1 = newObservableTable()
+	obsTable1.tick = 0
+
+local rendered = false
+	
+function render_ui(d) 
+	local player = game.players[1]
+	obsTable1.tick = d.tick
+	if not rendered then
+		rendered = true
+		useObserver(function() 
+			local parent = player.gui.center
+				render(player.gui.center, {
+				name="combinissimo_entity_ui",
+				type="frame", 
+				caption="Combonator", 
+			--	columns=2,
+				children={
+					{type="flow", direction="vertical", children={
+						{type="flow", direction="horizontal", children={
+							{ type="label", caption="Layout ID" },
+							{ type="text-box", text="zz "..(obsTable1.tick or "none") },
+						}},
+						{type="flow", direction="horizontal", children={
+							{ type="button", caption="Open" },
+							{ type="button", caption="Close" },
+						}},
+					}},
+				},
+			})
+		end)
+	end
+end
+
 ------------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------------
 
@@ -343,6 +380,12 @@ local editor_test_data = {entities = {}, rewires = {}}
 
 local on_tick_handler_once = false
 function on_tick_handler(event)
+	
+	if ((game.tick+2*60) % (60 * 2))<1 then
+		render_ui({tick=game.tick})
+	end
+	
+
     local player = game.players[1]
     if is_valid(player.opened) and player.opened.name == "stone-furnace" then
         game.players[1].print("Entering editor...")

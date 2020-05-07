@@ -1,0 +1,1 @@
+function sort(id){var table=document.getElementById(id).getElementsByClassName('brief-members')[0];var tb=table.tBodies[0],tr=Array.prototype.slice.call(tb.rows,0),i;tr=tr.sort(function(a,b){return 1*(a.cells[0].textContent.trim().localeCompare(b.cells[0].textContent.trim()));});for(i=0;i<tr.length;++i)tb.appendChild(tr[i]);}

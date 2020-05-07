@@ -46,24 +46,26 @@ function copyPrototype(s1, s2)
   if not s.source_type then error("copyPrototype called with s.source_type == nil !") end
   if not s.source_name then error("copyPrototype called with s.source_name == nil !") end
   if not s.new_name then error("copyPrototype called with s.new_name == nil !") end
+  if not s.prefixed_name then s.prefixed_name = s.new_name end
+  if not s.item_name then item_name = s.prefixed_name end
   if not data.raw[s.source_type] then error("data.raw["..s.source_type.."] doesn't exist") end
   if not data.raw[s.source_type][s.source_name] then error("data.raw["..s.source_type.."]["..s.source_name.."] doesn't exist") end
   local p = table.deepcopy(data.raw[s.source_type][s.source_name])
-  p.name = s.new_name
+  p.name = s.prefixed_name
   
   if p.minable and p.minable.result then
-	p.minable.result = s.new_name
+	p.minable.result = s.item_name
   end
   if p.place_result then
-	p.place_result = s.new_name
+	p.place_result = s.item_name
   end
   if p.result then
-	p.result = s.new_name
+	p.result = s.item_name
   end
   if p.results then
 		for _,result in pairs(p.results) do
 			if result.name == s.source_name then
-				result.name = s.new_name
+				result.name = s.item_name
 			end
 		end
 	end

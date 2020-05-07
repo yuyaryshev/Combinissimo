@@ -1,0 +1,145 @@
+ЧТО НАДО СДЕЛАТЬ:
+Надо на ноде спарсить страницу:
+	https://lua-api.factorio.com/latest/LuaGuiElement.html#LuaGuiElement.direction
+	
+Примерное содержимое приведено ниже И СОХРАНЕНО В HTML файле в этой папке.
+ЗАтем на основе этого содержимого нужно СГЕНЕРИРОВАТЬ файлы применения значений.
+
+ПОЧЕМУ нельзя просто циклами сравнивать таблицы и применять что изменилось??????
+ПОТОМУ ЧТО FACTORIO API сделан так, что часть свойств READONLY.
+Они их не меняет и на ругается если пытаться их изменить.
+Эти свойства все равно хардкодить - для них пересоздавать UI.
+========================================================================================
+
+
+
+
+
+"label": A piece of text.
+"entity-preview": A preview of an entity. The entity has to be set after the GUI element is created.
+"empty-widget": A empty widget that just exists. The root GUI element screen is an empty-widget.
+"tabbed-pane": A collection of tabs.
+
+
+"button": Clickable elements that fire on_gui_click when clicked.
+"flow": Invisible containers that lay out children either horizontally or vertically. The root GUI elements (top, left and center; see LuaGui) are flows.
+"frame": Grey semi-transparent boxes that contain other elements. They have a caption, and, just like flows, they lay out children either horizontally or vertically.
+"table": An invisible container that lays out children in a specific number of columns. Column width is given by the largest element contained in that row.
+"textfield": Boxes of text the user can type in.
+"progressbar": Indicate progress by displaying a partially filled bar.
+"checkbox": Clickable elements with a cross in the middle that can be turned off or on.
+"radiobutton": Identical to checkbox except circular.
+"sprite-button": A button that displays an image rather than text.
+"sprite": An element that shows an image.
+"scroll-pane": Similar to a flow but includes the ability to show and use scroll bars.
+"drop-down": A drop down list of other elements.
+"line": A vertical or horizontal line.
+"list-box": A list of other elements.
+"camera": A camera that shows the game at the given position on the given surface.
+"choose-elem-button": A button that lets the player pick one of an: item, entity, tile, or signal similar to the filter-select window.
+"text-box": A multi-line text box that supports selection and copy-paste.
+"slider": A number picker.
+"minimap": A minimap preview similar to the normal player minimap.
+"tab": A tab for use in a tabbed-pane.
+"switch": A switch with left, right, and none states.
+
+
+
+Table with the following fields:
+•	type :: string: The kind of the element to add. Has to be one of the above listed gui element types.
+•	name :: string: Name of the child element.
+•	caption :: LocalisedString (optional): The text displayed on the child element. For frames, this is the "heading". For other elements, like buttons or labels, this is the content. Whilst this attribute may be used on all elements, it doesn't make sense for tables and flows as they won't display it.
+•	tooltip :: LocalisedString (optional): Tooltip of the child element.
+•	enabled :: boolean (optional): Whether the child element is enabled.
+•	ignored_by_interaction :: boolean (optional): Whether the child element is ignored by interaction.
+•	style :: string (optional): Style of the new element.
+•	Other attributes may have to be specified, depending on type
+    o   	button
+           	mouse_button_filter :: MouseButtonFlags (optional): Which mouse buttons the button responds to.
+    o   	flow
+           	direction :: string: The initial direction of the flow's layout. See LuaGuiElement::direction.
+    o   	frame
+           	direction :: string: The initial direction of the frame's layout. See LuaGuiElement::direction.
+    o   	table
+           	column_count :: uint: Number of columns.
+           	draw_vertical_lines :: boolean (optional): If the table should draw vertical grid lines. Defaults to false if not given.
+           	draw_horizontal_lines :: boolean (optional): If the table should draw horizontal grid lines. Defaults to false if not given.
+           	draw_horizontal_line_after_headers :: boolean (optional): If the table should draw a horizontal grid line after the headers. Defaults to false if not given.
+           	vertical_centering :: boolean (optional): Whether the fields of this table should be vertically centered. Defaults to true if not given.
+    o   	textfield
+           	text :: string (optional): The initial text contained in the textfield.
+           	numeric :: boolean (optional)
+           	allow_decimal :: boolean (optional)
+           	allow_negative :: boolean (optional)
+           	is_password :: boolean (optional)
+           	lose_focus_on_confirm :: boolean (optional)
+           	clear_and_focus_on_right_click :: boolean (optional)
+    o   	progressbar
+           	value :: double (optional): Initial value of the progressbar, in range [0, 1]. Defaults to 0 if not given.
+    o   	checkbox
+           	state :: boolean: Whether the checkbox should be checked by default.
+    o   	radiobutton
+           	state :: boolean: Whether the radiobutton should be checked by default.
+    o   	sprite-button
+           	sprite :: SpritePath (optional): Path to the image to display on the button.
+           	hovered_sprite :: SpritePath (optional): Path to the image to display on the button when it is hovered.
+           	clicked_sprite :: SpritePath (optional): Path to the image to display on the button when it is clicked.
+           	number :: double (optional): The number shown on the button.
+           	show_percent_for_small_numbers :: boolean (optional): Format small numbers as percentages. Defaults to false if not given.
+           	mouse_button_filter :: MouseButtonFlags (optional): Which mouse buttons the button responds to.
+    o   	sprite
+           	sprite :: SpritePath (optional): Path to the image to display.
+    o   	scroll-pane
+           	horizontal_scroll_policy :: string (optional): Policy of the horizontal scroll bar, possible values are "auto" (default), "never", "always", "auto-and-reserve-space".
+           	vertical_scroll_policy :: string (optional): Policy of the vertical scroll bar, possible values are "auto" (default), "never", "always", "auto-and-reserve-space".
+    o   	drop-down
+           	items :: array of LocalisedString (optional): The initial items in the dropdown.
+           	selected_index :: uint (optional): The initial selected index.
+    o   	line
+           	direction :: string: The initial direction of the line.
+    o   	list-box
+           	items :: array of LocalisedString (optional): The initial items in the listbox.
+           	selected_index :: uint (optional): The initial selected index.
+    o   	camera
+           	position :: Position: The position the camera centers on.
+           	surface_index :: uint (optional): The surface the camera will render else if not given the players surface is used.
+           	zoom :: double (optional): The camera zoom - defaults to 0.75.
+    o   	choose-elem-button
+           	elem_type :: string: The type of the button - one of the following values.
+           	item :: string (optional): If type is "item" - the default value for the button.
+           	tile :: string (optional): If type is "tile" - the default value for the button.
+           	entity :: string (optional): If type is "entity" - the default value for the button.
+           	signal :: SignalID (optional): If type is "signal" - the default value for the button.
+           	fluid :: string (optional): If type is "fluid" - the default value for the button.
+           	recipe :: string (optional): If type is "recipe" - the default value for the button.
+           	decorative :: string (optional): If type is "decorative" - the default value for the button.
+           	item-group :: string (optional): If type is "item-group" - the default value for the button.
+           	achievement :: string (optional): If type is "achievement" - the default value for the button.
+           	equipment :: string (optional): If type is "equipment" - the default value for the button.
+           	technology :: string (optional): If type is "technology" - the default value for the button.
+    o   	text-box
+           	text :: string (optional): The initial text contained in the text-box.
+           	clear_and_focus_on_right_click :: boolean (optional)
+    o   	slider
+           	minimum_value :: double (optional): The minimum value for the slider
+           	maximum_value :: double (optional): The maximum value for the slider
+           	value :: double (optional): The initial value for the slider
+           	value_step :: double (optional): The minimum value the slider can move
+           	discrete_slider :: boolean (optional)
+           	discrete_values :: boolean (optional)
+    o   	minimap
+           	position :: Position (optional): The position the minimap centers on or if not given it will center on the player that owns this element.
+           	surface_index :: uint (optional): The surface the camera will render else if not given the players surface is used.
+           	chart_player_index :: uint (optional): The player index the map should use else if not set the player that owns this element is used.
+           	force :: string (optional): The force this minimap should use else if not given the players force that owns this element is used.
+           	zoom :: double (optional): The camera zoom - defaults to 0.75.
+    o   	tab
+           	badge_text :: LocalisedString (optional): The text to display after the normal tab text (designed to work with numbers)
+    o   	switch
+           	switch_state :: string (optional): 'left', 'right', or 'none'. If 'none' allow_none_state must be true.
+           	allow_none_state :: boolean (optional)
+           	left_label_caption :: LocalisedString (optional)
+           	left_label_tooltip :: LocalisedString (optional)
+           	right_label_caption :: LocalisedString (optional)
+           	right_label_tooltip :: LocalisedString (optional)
+

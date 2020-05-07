@@ -1,0 +1,10 @@
+{
+  "name": "InvisibleCombinators",
+  "version": "0.0.1",
+  "title": "InvisibleCombinators",
+  "author": "thelordodin",
+  "homepage": "",
+  "dependencies": ["base"],
+  "description": "Combinators take too much space? You don't like wires mess? Here is high perfomance solution.",
+  "factorio_version": "0.17"
+}
